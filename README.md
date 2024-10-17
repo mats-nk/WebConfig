@@ -228,31 +228,22 @@ Defines the label for the web form.
 
 `type` Integer
 
-Type of the HTML input element
--	`INPUTTEXT` Texteingabefeld
--	`INPUTPASSWORD` Passwort Eingabefeld
--	`INPUTNUMBER` Nummern Eingabefeld
--	`INPUTDATE` Datums Eingabefeld
--	`INPUTTIME` Zeit Eingabefeld
--	`INPUTRANGE` Slider zur Nummerneingabe
--	`INPUTCHECKBOX` Ja/Nein Auswahl
--	`INPUTRADIO` Mehrfachauswahl
--	`INPUTSELECT` Mehrfachauswahl aus Dropdown-Liste
--	`INPUTCOLOR` Farbauswahl
-- `INPUTFLOAT` Fließkommazahl
-- `INPUTTEXTAREA` Mehrzeiliges Textfeld
-- `INPUTMULTICHECK` Mehrere Checkboxen
+0 = INPUTTEXT.
 
 `default`	String
-Sefault value.
+
+Default value.
 
 `min` Integer	(optional)
+
 Minimum value for number input  or columns for test area.
 
-`max`	    Integer	(optional)
+`max`	Integer	(optional)
+
 Maximum value for number input  or rows for text area.
 
 `options`	List of objects (optional)
+
 A list to define options and values for multi select input fields  on multi checkboxes the option name is used as label.
 
 #### Example defines a JSON String with all types of input fields
