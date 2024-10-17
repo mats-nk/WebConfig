@@ -2,108 +2,107 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-
 #include <WebConfig.h>
 
 String params = "["
   "{"
   "'name':'ssid',"
-  "'label':'Name des WLAN',"
+  "'label':'WiFi SSID name',"
   "'type':"+String(INPUTTEXT)+","
   "'default':''"
   "},"
   "{"
   "'name':'pwd',"
-  "'label':'WLAN Passwort',"
+  "'label':'WiFi password',"
   "'type':"+String(INPUTPASSWORD)+","
   "'default':''"
   "},"
   "{"
   "'name':'amount',"
-  "'label':'Menge',"
+  "'label':'Amount',"
   "'type':"+String(INPUTNUMBER)+","
   "'min':-10,'max':20,"
   "'default':'1'"
   "},"
   "{"
   "'name':'float',"
-  "'label':'Fließkomma Zahl',"
+  "'label':'Floating point number',"
   "'type':"+String(INPUTTEXT)+","
   "'default':'1.00'"
   "},"
   "{"
   "'name':'area',"
-  "'label':'Mehr Text',"
+  "'label':'More text',"
   "'type':"+String(INPUTTEXTAREA)+","
   "'default':'',"
   "'min':40,'max':5"  //min = columns max = rows
   "},"
   "{"
   "'name':'duration',"
-  "'label':'Dauer(s)',"
+  "'label':'Duration(s)',"
   "'type':"+String(INPUTRANGE)+","
   "'min':5,'max':30,"
   "'default':'10'"
   "},"
   "{"
   "'name':'date',"
-  "'label':'Datum',"
+  "'label':'Date',"
   "'type':"+String(INPUTDATE)+","
   "'default':'2019-08-14'"
   "},"
   "{"
   "'name':'time',"
-  "'label':'Zeit',"
+  "'label':'Time',"
   "'type':"+String(INPUTTIME)+","
   "'default':'18:30'"
   "},"
   "{"
   "'name':'col',"
-  "'label':'Farbe',"
+  "'label':'Color',"
   "'type':"+String(INPUTCOLOR)+","
   "'default':'#ffffff'"
   "},"
   "{"
   "'name':'switch',"
-  "'label':'Schalter',"
+  "'label':'Switch',"
   "'type':"+String(INPUTCHECKBOX)+","
   "'default':'1'"
   "},"
   "{"
   "'name':'gender',"
-  "'label':'Geschlecht',"
+  "'label':'Gender',"
   "'type':"+String(INPUTRADIO)+","
   "'options':["
-  "{'v':'m','l':'männlich'},"
-  "{'v':'w','l':'weiblich'},"
-  "{'v':'x','l':'anderes'}],"
+  "{'v':'m','l':'male'},"
+  "{'v':'w','l':'female'},"
+  "{'v':'x','l':'other'}],"
   "'default':'w'"
   "},"
   "{"
   "'name':'continent',"
-  "'label':'Kontinent',"
+  "'label':'Continent',"
   "'type':"+String(INPUTSELECT)+","
   "'options':["
-  "{'v':'EU','l':'Europa'},"
-  "{'v':'AF','l':'Afrika'},"
-  "{'v':'AS','l':'Asien'},"
-  "{'v':'AU','l':'Australien'},"
-  "{'v':'AM','l':'Amerika'}],"
+  "{'v':'EU','l':'Europe'},"
+  "{'v':'AF','l':'Africa'},"
+  "{'v':'AS','l':'Asia'},"
+  "{'v':'AU','l':'Australia'},"
+  "{'v':'AM','l':'America'}],"
   "'default':'AM'"
   "},"
   "{"
-  "'name':'wochentag',"
-  "'label':'Wochentag',"
+  "'name':'weekday',"
+  "'label':'Weekday',"
   "'type':"+String(INPUTMULTICHECK)+","
   "'options':["
-  "{'v':'0','l':'Sonntag'},"
-  "{'v':'1','l':'Montag'},"
-  "{'v':'2','l':'Dienstag'},"
-  "{'v':'3','l':'Mittwoch'},"
-  "{'v':'4','l':'Donnerstag'},"
-  "{'v':'5','l':'Freitag'},"
-  "{'v':'6','l':'Samstag'}],"
-  "'default':''"
+  "{'v':'0','l':'Sunday'},"
+  "{'v':'1','l':'Monday'},"
+  "{'v':'2','l':'Tuesday'},"
+  "{'v':'3','l':'Wednesday'},"
+  "{'v':'4','l':'Thursday'},"
+  "{'v':'5','l':'Friday'},"
+  "{'v':'6','l':'Saturday'}],"
+  "'default':'1'"
   "}"
   "]";
 
@@ -113,9 +112,9 @@ WebConfig conf;
 boolean initWiFi() {
     boolean connected = false;
     WiFi.mode(WIFI_STA);
-    Serial.print("Verbindung zu ");
+    Serial.print("Connection to ");
     Serial.print(conf.values[0]);
-    Serial.println(" herstellen");
+    Serial.println(" restore");
     if (conf.values[0] != "") {
       WiFi.begin(conf.values[0].c_str(),conf.values[1].c_str());
       uint8_t cnt = 0;
@@ -126,7 +125,7 @@ boolean initWiFi() {
       }
       Serial.println();
       if (WiFi.status() == WL_CONNECTED) {
-        Serial.print("IP-Adresse = ");
+        Serial.print("IP-Adress = ");
         Serial.println(WiFi.localIP());
         connected = true;
       }
@@ -142,7 +141,7 @@ void handleRoot() {
   conf.handleFormRequest(&server);
   if (server.hasArg("SAVE")) {
     uint8_t cnt = conf.getCount();
-    Serial.println("*********** Konfiguration ************");
+    Serial.println("*********** Configuration ************");
     for (uint8_t i = 0; i<cnt; i++) {
       Serial.print(conf.getName(i));
       Serial.print(" = ");
@@ -172,7 +171,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   server.handleClient();
   MDNS.update();
 }
