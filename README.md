@@ -228,7 +228,7 @@ Defines the label for the web form.
 
 `type` Integer
 
-0 = INPUTTEXT.
+See _Type of HTML input fields:_.
 
 `default`	String
 
