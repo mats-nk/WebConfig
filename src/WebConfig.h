@@ -115,7 +115,7 @@ public:
   void registerOnDelete(void (*callback)(String name));
   String values[MAXVALUES];                                // Values for the parameter
 private:
-  char _buf[1000];
+  char _buf[1200];
   uint8_t _count;
   String _apName;
   uint8_t _buttons = BTN_CONFIG;
