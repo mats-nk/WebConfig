@@ -1,5 +1,4 @@
 /*
-
 File WebConfig.cpp
 Version 1.4.2
 Author Gerald Lechner
@@ -14,8 +13,8 @@ The library works with ESP8266 and ESP32
 Dependencies:
   ESP8266WebServer.h
   ArduinoJson.h
-
 */
+
 #include <WebConfig.h>
 #include <Arduino.h>
 #if defined(ESP32)
