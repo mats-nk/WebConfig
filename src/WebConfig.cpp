@@ -37,37 +37,58 @@ const char HTML_START[] PROGMEM =
 "<head>\n"
 "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n"
 "<meta name='viewport' content='width=320' />\n"
-"<title>Konfiguration</title>\n"
+"<title>Config</title>\n"
 "<style>\n"
-"body {\n"
-"  background-color: #d2f3eb;\n"
-"  font-family: Arial, Helvetica, Sans-Serif;\n"
-"  Color: #000000;\n"
-"  font-size:12pt;\n"
-"  width:320px;\n"
-"}\n"
-".titel {\n"
-"font-weight:bold;\n"
-"text-align:center;\n"
-"width:100%%;\n"
-"padding:5px;\n"
-"}\n"
-".zeile {\n"
-"  width:100%%;\n"
-"  padding:5px;\n"
-"  text-align: center;\n"
-"}\n"
-"button {\n"
-"font-size:14pt;\n"
-"width:150px;\n"
-"border-radius:10px;\n"
-"margin:5px;\n"
-"}\n"
+"body {"
+"	background-color: #3e535e;"
+"	font-family: Arial, Helvetica, Sans-Serif;"
+"	Color: #000000;"
+"	font-size:12pt;"
+"}"
+"#main_div {"
+"	background-color: #77bde1;"
+"	padding: 20px 0;"
+"	margin: 2vh auto !important;"
+"	width: 100%%;"
+"	max-width: 300px;"
+"}"
+".titel {"
+"	font-weight:bold;"
+"	text-align:center;"
+"	width:100%%;"
+"	padding:5px 0 15px;"
+"	font-size: 13pt;"
+"}"
+".zeile {"
+"	width:100%%;"
+"	padding:5px 0;"
+"	text-align: center;"
+"}"
+".zeile.input-range {"
+"	margin-bottom: 10px;"
+"}"
+"button {"
+"	width:150px;"
+"	margin:5px 0 10px;"
+"	width: 65%%;"
+"	border: 1px #3e535e solid;"
+"	padding: 5px;"
+"	border-radius: 0;"
+"}"
+""
+"input {"
+"	width: 60%%;"
+"	margin-bottom: 10px;"
+"	padding: 5px;"
+"}"
+"input[type=range] {"
+"	margin-bottom: -8px;"
+"}"
 "</style>\n"
 "</head>\n"
 "<body>\n"
-"<div id='main_div' style='margin-left:15px;margin-right:15px;'>\n"
-"<div class='titel'>Konfiguration %s</div>\n"
+"<div id='main_div'>\n"
+"<div class='titel'>Config %s</div>\n"
 "<form method='post'>\n";
 
 //Template for one input field
@@ -82,7 +103,7 @@ const char HTML_ENTRY_NUMBER[] PROGMEM =
 "  <div class='zeile'><input type='number' min='%i' max='%i' value='%s' name='%s'></div>\n";
 const char HTML_ENTRY_RANGE[] PROGMEM =
 "  <div class='zeile'><b>%s</b></div>\n"
-"  <div class='zeile'>%i&nbsp;<input type='range' min='%i' max='%i' value='%s' name='%s'>&nbsp;%i</div>\n";
+"  <div class='zeile input-range'>%i&nbsp;<input type='range' min='%i' max='%i' value='%s' name='%s'>&nbsp;%i</div>\n";
 const char HTML_ENTRY_CHECKBOX[] PROGMEM =
 "  <div class='zeile'><b>%s</b><input type='checkbox' %s name='%s'></div>\n";
 const char HTML_ENTRY_RADIO_TITLE[] PROGMEM =
@@ -318,7 +339,7 @@ void addMultiOption(char * buf, String name, uint8_t option, String label, Strin
     sprintf(_buf,HTML_START,_apName.c_str());
     server->send(200, "text/html", _buf);
     if (_buttons == BTN_CONFIG) {
-      createSimple(_buf,"apName","Name des Accesspoints","text",_apName);
+      createSimple(_buf,"apName","Device name","text",_apName);
       server->sendContent(_buf);
     }
 
