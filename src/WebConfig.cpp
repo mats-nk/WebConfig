@@ -1,20 +1,17 @@
 /*
-
 File WebConfig.cpp
-Version 1.4.2
-Author Gerald Lechner
-contakt lechge@gmail.com
+Version:  1.4.2
+Author:   Gerald Lechner
+Contact:  lechge@gmail.com
 
-Description
-This library builds a web page with a smart phone friendly form to edit
-a free definable number of configuration parameters.
+Description:
+This library builds a web page with a smart phone friendly form to edit a free definable number of configuration parameters.
 The submitted data will bestored in the SPIFFS
 The library works with ESP8266 and ESP32
 
 Dependencies:
   ESP8266WebServer.h
   ArduinoJson.h
-
 */
 #include <WebConfig.h>
 #include <Arduino.h>
@@ -29,8 +26,8 @@ Dependencies:
 
 const char * inputtypes[] = {"text","password","number","date","time","range","check","radio","select","color","float"};
 
-//HTML templates
-//Template for header and begin of form
+// HTML templates
+// Template for header and begin of form
 const char HTML_START[] PROGMEM =
 "<!DOCTYPE HTML>\n"
 "<html lang='de'>\n"
@@ -109,6 +106,7 @@ const char HTML_END[] PROGMEM =
 "<div class='zeile'><button type='submit' name='SAVE'>Save</button>\n"
 "<button type='submit' name='RST'>Restart</button></div>\n"
 "</form>\n"
+"<div class='zeile'><a href='/'>Back</a></div>\n"
 "</div>\n"
 "</body>\n"
 "</html>\n";
