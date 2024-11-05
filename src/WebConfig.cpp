@@ -137,6 +137,7 @@ const char HTML_END[] PROGMEM =
 "<div class='zeile'><button type='submit' name='SAVE'>Save</button>\n"
 "<button type='submit' name='RST'>Restart</button></div>\n"
 "</form>\n"
+"<div class='zeile'><a href='/'>Back</a></div>\n"
 "</div>\n"
 "</body>\n"
 "</html>\n";
