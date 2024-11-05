@@ -31,7 +31,7 @@ const char * inputtypes[] = {"text","password","number","date","time","range","c
 // Template for header and begin of form
 const char HTML_START[] PROGMEM =
 "<!DOCTYPE HTML>\n"
-"<html lang='de'>\n"
+"<html lang='en'>\n"
 "<head>\n"
 "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n"
 "<meta name='viewport' content='width=320' />\n"
@@ -74,22 +74,13 @@ const char HTML_START[] PROGMEM =
 "	border-radius: 0;"
 "}"
 ""
-"input:not([type='checkbox']):not([type='radio']), textarea, select {"
+"input {"
 "	width: 60%%;"
 "	margin-bottom: 10px;"
 "	padding: 5px;"
 "}"
 "input[type=range] {"
 "	margin-bottom: -8px;"
-"}"
-"fieldset {"
-"  border: 1px #3e535e solid;"
-"  width: 60%%;"
-"  margin: 0 auto;"
-"  padding: 9px 0;"
-"}"
-"fieldset input {"
-"  margin-left: 10px;"
 "}"
 "</style>\n"
 "</head>\n"
@@ -332,7 +323,7 @@ void addMultiOption(char * buf, String name, uint8_t option, String label, Strin
   }
   if (server->hasArg(F("DONE")) && _onDone) {
     _onDone(getResults());
-    exit = true;
+    exit = true;f
   }
   if (server->hasArg(F("CANCEL")) && _onCancel) {
     _onCancel();
