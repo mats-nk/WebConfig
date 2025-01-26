@@ -1,10 +1,12 @@
 /*
 File WebConfig.cpp
-Version:  1.4.2
+Version:  1.4.3
 Author:   Gerald Lechner
-ContaCt:  lechge@gmail.com
+Contact:  lechge@gmail.com
 
-Description
+Modified: Mats Karlsson (mats.o.karlsson@gmail.com)
+
+Description:
 This library builds a web page with a smart phone friendly form to edit a free definable number of configuration parameters.
 The submitted data will bestored in the SPIFFS
 The library works with ESP8266 and ESP32
@@ -57,12 +59,12 @@ const char HTML_START[] PROGMEM =
 "	padding:5px 0 15px;"
 "	font-size: 13pt;"
 "}"
-".zeile {"
+".line {"
 "	width:100%%;"
 "	padding:5px 0;"
 "	text-align: center;"
 "}"
-".zeile.input-range {"
+".line.input-range {"
 "	margin-bottom: 10px;"
 "}"
 "button {"
@@ -91,33 +93,33 @@ const char HTML_START[] PROGMEM =
 
 //Template for one input field
 const char HTML_ENTRY_SIMPLE[] PROGMEM =
-"  <div class='zeile'><b>%s</b></div>\n"
-"  <div class='zeile'><input type='%s' value='%s' name='%s'></div>\n";
+"  <div class='line'><b>%s</b></div>\n"
+"  <div class='line'><input type='%s' value='%s' name='%s'></div>\n";
 const char HTML_ENTRY_AREA[] PROGMEM =
-"  <div class='zeile'><b>%s</b></div>\n"
-"  <div class='zeile'><textarea rows='%i' cols='%i' name='%s'>%s</textarea></div>\n";
+"  <div class='line'><b>%s</b></div>\n"
+"  <div class='line'><textarea rows='%i' cols='%i' name='%s'>%s</textarea></div>\n";
 const char HTML_ENTRY_NUMBER[] PROGMEM =
-"  <div class='zeile'><b>%s</b></div>\n"
-"  <div class='zeile'><input type='number' min='%i' max='%i' value='%s' name='%s'></div>\n";
+"  <div class='line'><b>%s</b></div>\n"
+"  <div class='line'><input type='number' min='%i' max='%i' value='%s' name='%s'></div>\n";
 const char HTML_ENTRY_RANGE[] PROGMEM =
-"  <div class='zeile'><b>%s</b></div>\n"
-"  <div class='zeile input-range'>%i&nbsp;<input type='range' min='%i' max='%i' value='%s' name='%s'>&nbsp;%i</div>\n";
+"  <div class='line'><b>%s</b></div>\n"
+"  <div class='line input-range'>%i&nbsp;<input type='range' min='%i' max='%i' value='%s' name='%s'>&nbsp;%i</div>\n";
 const char HTML_ENTRY_CHECKBOX[] PROGMEM =
-"  <div class='zeile'><b>%s</b><input type='checkbox' %s name='%s'></div>\n";
+"  <div class='line'><b>%s</b><input type='checkbox' %s name='%s'></div>\n";
 const char HTML_ENTRY_RADIO_TITLE[] PROGMEM =
-" <div class='zeile'><b>%s</b></div>\n";
+" <div class='line'><b>%s</b></div>\n";
 const char HTML_ENTRY_RADIO[] =
-"  <div class='zeile'><input type='radio' name='%s' value='%s' %s>%s</div>\n";
+"  <div class='line'><input type='radio' name='%s' value='%s' %s>%s</div>\n";
 const char HTML_ENTRY_SELECT_START[] PROGMEM =
-" <div class='zeile'><b>%s</b></div>\n"
-" <div class='zeile'><select name='%s'>\n";
+" <div class='line'><b>%s</b></div>\n"
+" <div class='line'><select name='%s'>\n";
 const char HTML_ENTRY_SELECT_OPTION[] PROGMEM =
 "  <option value='%s' %s>%s</option>\n";
 const char HTML_ENTRY_SELECT_END[] PROGMEM =
 " </select></div>\n";
 const char HTML_ENTRY_MULTI_START[] PROGMEM =
-" <div class='zeile'><b>%s</b></div>\n"
-" <div class='zeile'><fieldset style='text-align:left;'>\n";
+" <div class='line'><b>%s</b></div>\n"
+" <div class='line'><fieldset style='text-align:left;'>\n";
 const char HTML_ENTRY_MULTI_OPTION[] PROGMEM =
 "  <input type='checkbox' name='%s', value='%i' %s>%s<br>\n";
 const char HTML_ENTRY_MULTI_END[] PROGMEM =
@@ -125,10 +127,10 @@ const char HTML_ENTRY_MULTI_END[] PROGMEM =
 
 //Template for save button and end of the form with save
 const char HTML_END[] PROGMEM =
-"<div class='zeile'><button type='submit' name='SAVE'>Save</button>\n"
+"<div class='line'><button type='submit' name='SAVE'>Save</button>\n"
 "<button type='submit' name='RST'>Restart</button></div>\n"
 "</form>\n"
-"<div class='zeile'><a href='/'>Back</a></div>\n"
+"<div class='line'><a href='/'>Back</a></div>\n"
 "</div>\n"
 "</body>\n"
 "</html>\n";
@@ -394,7 +396,7 @@ void addMultiOption(char * buf, String name, uint8_t option, String label, Strin
     if (_buttons == BTN_CONFIG) {
       server->sendContent(HTML_END);
     } else {
-      server->sendContent("<div class='zeile'>\n");
+      server->sendContent("<div class='line'>\n");
       if ((_buttons & BTN_DONE) == BTN_DONE) {
         sprintf(_buf,HTML_BUTTON,"DONE","Done");
         server->sendContent(_buf);
