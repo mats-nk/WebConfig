@@ -91,7 +91,7 @@ const char HTML_START[] PROGMEM =
 "<div class='titel'>Config %s</div>\n"
 "<form method='post'>\n";
 
-//Template for one input field
+// Template for one input field
 const char HTML_ENTRY_SIMPLE[] PROGMEM =
 "  <div class='line'><b>%s</b></div>\n"
 "  <div class='line'><input type='%s' value='%s' name='%s'></div>\n";
@@ -125,7 +125,7 @@ const char HTML_ENTRY_MULTI_OPTION[] PROGMEM =
 const char HTML_ENTRY_MULTI_END[] PROGMEM =
 " </fieldset></div>\n";
 
-//Template for save button and end of the form with save
+// Template for save button and end of the form with save
 const char HTML_END[] PROGMEM =
 "<div class='line'><button type='submit' name='SAVE'>Save</button>\n"
 "<button type='submit' name='RST'>Restart</button></div>\n"
@@ -134,7 +134,7 @@ const char HTML_END[] PROGMEM =
 "</div>\n"
 "</body>\n"
 "</html>\n";
-//Template for save button and end of the form without save
+// Template for save button and end of the form without save
 const char HTML_BUTTON[] PROGMEM =
 "<button type='submit' name='%s'>%s</button>\n";
 
@@ -202,7 +202,6 @@ void WebConfig::addDescription(String parameter){
       }
       _count++;
     }
-
   }
   _apName = WiFi.macAddress();
   _apName.replace(":","");
@@ -217,7 +216,7 @@ void createSimple(char * buf, const char * name, const char * label, const char 
 }
 
 void createTextarea(char * buf, DESCRIPTION descr, String value) {
-  //max = rows min = cols
+  // max = rows min = cols
   sprintf(buf,HTML_ENTRY_AREA,descr.label,descr.max,descr.min,descr.name, value.c_str());
 }
 
@@ -269,28 +268,28 @@ void addMultiOption(char * buf, String name, uint8_t option, String label, Strin
   }
 }
 
-//***********Different type for ESP32 WebServer and ESP8266WebServer ********
-//both classes have the same functions
+// ** Different type for ESP32 WebServer and ESP8266WebServer **
+// Both classes have the same functions
 #if defined(ESP32)
-  //function to respond a HTTP request for the form use the default file
-  //to save and restart ESP after saving the new config
+  // Function to respond a HTTP request for the form use the default file
+  // to save and restart ESP after saving the new config
   void WebConfig::handleFormRequest(WebServer * server){
     handleFormRequest(server,CONFFILE);
   }
-  //function to respond a HTTP request for the form use the filename
-  //to save. If auto is true restart ESP after saving the new config
+  // Function to respond a HTTP request for the form use the filename
+  // to save. If auto is true restart ESP after saving the new config
   void WebConfig::handleFormRequest(WebServer * server, const char * filename){
 #else
-  //function to respond a HTTP request for the form use the default file
-  //to save and restart ESP after saving the new config
+  // Function to respond a HTTP request for the form use the default file
+  // to save and restart ESP after saving the new config
   void WebConfig::handleFormRequest(ESP8266WebServer * server){
     handleFormRequest(server,CONFFILE);
   }
-  //function to respond a HTTP request for the form use the filename
-  //to save. If auto is true restart ESP after saving the new config
+  // Function to respond a HTTP request for the form use the filename
+  // to save. If auto is true restart ESP after saving the new config
   void WebConfig::handleFormRequest(ESP8266WebServer * server, const char * filename){
 #endif
-//******************** Rest of the function has no difference ***************
+// ** Rest of the function has no difference **
   uint8_t a,v;
   String val;
   if (server->args() > 0) {
@@ -389,7 +388,6 @@ void addMultiOption(char * buf, String name, uint8_t option, String label, Strin
           break;
         default : _buf[0] = 0;
           break;
-
       }
       server->sendContent(_buf);
     }
@@ -413,7 +411,7 @@ void addMultiOption(char * buf, String name, uint8_t option, String label, Strin
     }
   }
 }
-//get the index for a value by parameter name
+// Get the index for a value by parameter name
 int16_t WebConfig::getIndex(const char * name){
   int16_t i = _count-1;
   while ((i>=0) && (strcmp(name,_description[i].name)!=0)) {
@@ -421,13 +419,13 @@ int16_t WebConfig::getIndex(const char * name){
   }
   return i;
 }
-//read configuration from file
+// Read configuration from file
 boolean WebConfig::readConfig(const char * filename){
   String line,name,value;
   uint8_t pos;
   int16_t index;
   if (!SPIFFS.exists(filename)) {
-    //if configfile does not exist write default values
+    // If configfile does not exist write default values
     writeConfig(filename);
   }
   File f = SPIFFS.open(filename,"r");
@@ -462,11 +460,11 @@ boolean WebConfig::readConfig(const char * filename){
     return false;
   }
 }
-//read configuration from default file
+// Read configuration from default file
 boolean WebConfig::readConfig(){
   return readConfig(CONFFILE);
 }
-//write configuration to file
+// Write configuration to file
 boolean WebConfig::writeConfig(const char * filename){
   String val;
   File f = SPIFFS.open(filename,"w");
@@ -482,22 +480,21 @@ boolean WebConfig::writeConfig(const char * filename){
     Serial.println(F("Cannot write configuration"));
     return false;
   }
-
 }
-//write configuration to default file
+// Write configuration to default file
 boolean WebConfig::writeConfig(){
   return writeConfig(CONFFILE);
 }
-//delete configuration file
+// Delete configuration file
 boolean WebConfig::deleteConfig(const char * filename){
   return SPIFFS.remove(filename);
 }
-//delete default configutation file
+// Delete default configutation file
 boolean WebConfig::deleteConfig(){
   return deleteConfig(CONFFILE);
 }
 
-//get a parameter value by its name
+// Get a parameter value by its name
 const String WebConfig::getString(const char * name) {
   int16_t index;
   index = getIndex(name);
@@ -509,7 +506,7 @@ const String WebConfig::getString(const char * name) {
 }
 
 
-//Get results as a JSON string
+// Get results as a JSON string
 String WebConfig::getResults(){
   char buffer[1024];
   StaticJsonDocument<1000> doc;
@@ -526,14 +523,13 @@ String WebConfig::getResults(){
       case INPUTRANGE :
       case INPUTNUMBER : doc[_description[i].name] = values[i].toInt(); break;
       case INPUTFLOAT : doc[_description[i].name] = values[i].toFloat(); break;
-
     }
   }
   serializeJson(doc,buffer);
   return String(buffer);
 }
 
-//Ser values from a JSON string
+// Set values from a JSON string
 void WebConfig::setValues(String json){
   int val;
   float fval;
@@ -562,13 +558,11 @@ void WebConfig::setValues(String json){
             values[i] = String(val); break;
           case INPUTFLOAT : fval = doc[_description[i].name];
             values[i] = String(fval); break;
-
         }
       }
     }
   }
 }
-
 
 const char * WebConfig::getValue(const char * name){
   int16_t index;
@@ -592,16 +586,17 @@ boolean WebConfig::getBool(const char * name){
   return (getString(name) != "0");
 }
 
-//get the accesspoint name
+// Get the accesspoint name
 const char * WebConfig::getApName(){
   return _apName.c_str();
 }
-//get the number of parameters
+
+// Get the number of parameters
 uint8_t WebConfig::getCount(){
   return _count;
 }
 
-//get the name of a parameter
+// Get the name of a parameter
 String WebConfig::getName(uint8_t index){
   if (index < _count) {
     return String(_description[index].name);
@@ -610,19 +605,19 @@ String WebConfig::getName(uint8_t index){
   }
 }
 
-//set the value for a parameter
+// Set the value for a parameter
 void WebConfig::setValue(const char*name,String value){
   int16_t i = getIndex(name);
   if (i>=0) values[i] = value;
 }
 
-//set the label for a parameter
+// Set the label for a parameter
 void WebConfig::setLabel(const char * name, const char* label){
   int16_t i = getIndex(name);
   if (i>=0) strlcpy(_description[i].label,label,LABELLENGTH);
 }
 
-//remove all options
+// Remove all options
 void WebConfig::clearOptions(uint8_t index){
   if (index < _count) _description[index].optionCnt = 0;
 }
@@ -632,7 +627,7 @@ void WebConfig::clearOptions(const char * name){
   if (i >= 0) clearOptions(i);
 }
 
-//add a new option
+// Add a new option
 void WebConfig::addOption(uint8_t index, String option){
   addOption(index,option,option);
 }
@@ -647,7 +642,7 @@ void WebConfig::addOption(uint8_t index, String option, String label){
   }
 }
 
-//modify an option
+// Modify an option
 void WebConfig::setOption(uint8_t index, uint8_t option_index, String option, String label){
   if (index < _count) {
     if (option_index < _description[index].optionCnt) {
@@ -655,7 +650,6 @@ void WebConfig::setOption(uint8_t index, uint8_t option_index, String option, St
       _description[index].labels[option_index] = label;
     }
   }
-
 }
 
 void WebConfig::setOption(char * name, uint8_t option_index, String option, String label){
@@ -663,7 +657,7 @@ void WebConfig::setOption(char * name, uint8_t option_index, String option, Stri
   if (i >= 0) setOption(i,option_index,option,label);
 }
 
-//get the options count
+// Get the options count
 uint8_t WebConfig::getOptionCount(uint8_t index){
   if (index < _count) {
     return _description[index].optionCnt;
@@ -679,26 +673,29 @@ uint8_t WebConfig::getOptionCount(char * name){
   } else {
     return 0;
   }
-
 }
 
-//set form type to doen cancel
+// Set form type to do an cancel
 void WebConfig::setButtons(uint8_t buttons){
   _buttons = buttons;
 }
-//register onSave callback
+
+// Register onSave callback
 void WebConfig::registerOnSave(void (*callback)(String results)){
   _onSave = callback;
 }
-//register onSave callback
+
+// Register onSave callback
 void WebConfig::registerOnDone(void (*callback)(String results)){
   _onDone = callback;
 }
-//register onSave callback
+
+// Register onSave callback
 void WebConfig::registerOnCancel(void (*callback)()){
   _onCancel = callback;
 }
-//register onDelete callback
+
+// Register onDelete callback
 void WebConfig::registerOnDelete(void (*callback)(String name)){
   _onDelete = callback;
 }
